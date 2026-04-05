@@ -22,7 +22,20 @@
 - [x] Media nav link in sidebar
 - [x] Vitest tests for storage procedures (4/4 passing)
 
-## Future
+## Redesign (approved)
+- [x] Update global CSS: off-white #F2EFE9 bg, black #0A0A0A text, teal #2D7A6B accent, 7% film grain overlay
+- [x] Update Google Fonts: Anton (hero), Bebas Neue (headings), DM Sans (body), Space Mono (mono)
+- [x] Rewrite all page copy: casual, grounded, sarcastic tone
+- [x] Homepage: full-screen video hero (Twin Peaks mist/trees placeholder), centered all-caps ANTON title
+- [x] Cursor displacement effect on hero video (canvas B&W+grain on mouse move, fade on stop)
+- [x] Optical distortion warp page transition (on navigation only, not scroll)
+- [x] Lightbox for portfolio images (fullscreen, keyboard nav, swipe, ESC, film grain bg)
+- [x] Update Navigation: bright theme, teal active dot
+- [x] Update Artists, About, Contact pages to new palette
+- [x] Update CustomCursor to work on light background
+- [x] Update MarqueeStrip to new palette
+
+## Future (requires user content / external credentials)
 - [ ] Replace placeholder artist portrait images with real photos
 - [ ] Add lightbox for portfolio images
 - [ ] Connect contact form to email service (Resend/Formspree)

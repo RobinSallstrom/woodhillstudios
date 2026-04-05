@@ -1,6 +1,6 @@
-// Navigation — Underground Cinema Design System
-// Fixed left sidebar on desktop, top bar on mobile
-// Accent: rust #C4622D | Font: Barlow Condensed + Space Mono
+// Navigation — Woodhill Studios Redesign
+// Fixed left sidebar on desktop, top bar + overlay on mobile
+// Palette: off-white bg, black text, teal accent
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
@@ -32,17 +32,14 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <nav className="fixed left-0 top-0 h-full w-[200px] z-50 hidden lg:flex flex-col justify-between py-10 px-8 border-r border-white/5">
+      {/* ── Desktop Sidebar ── */}
+      <nav className="fixed left-0 top-0 h-full w-[200px] z-50 hidden lg:flex flex-col justify-between py-10 px-8 border-r border-[#0A0A0A]/08 bg-[#F2EFE9]">
         {/* Logo */}
         <div>
           <Link href="/">
             <div className="mb-16 cursor-pointer group">
-              <div className="font-mono-label text-[10px] text-white/30 mb-1 tracking-[0.25em]">Stockholm</div>
-              <div
-                className="text-[13px] font-bold tracking-[0.12em] uppercase leading-tight text-[#E8E0D5] group-hover:text-white transition-colors duration-300"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
+              <div className="font-mono-label text-[10px] text-[#0A0A0A]/30 mb-1 tracking-[0.25em]">Stockholm</div>
+              <div className="font-heading text-[15px] tracking-[0.08em] uppercase leading-tight text-[#0A0A0A] group-hover:text-[#2D7A6B] transition-colors duration-300">
                 Woodhill<br />Studios
               </div>
             </div>
@@ -54,11 +51,17 @@ export default function Navigation() {
               const isActive = location === link.href || (link.href !== '/' && location.startsWith(link.href));
               return (
                 <Link key={link.href} href={link.href}>
-                  <div className={`nav-item flex items-center gap-3 py-2 group cursor-pointer`}>
-                    <div className={`nav-dot transition-all duration-300 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'}`} />
+                  <div className="flex items-center gap-3 py-2 group cursor-pointer">
+                    {/* Active / hover dot */}
+                    <div
+                      className="w-1.5 h-1.5 rounded-full bg-[#2D7A6B] transition-all duration-300 flex-shrink-0"
+                      style={{ opacity: isActive ? 1 : 0, transform: isActive ? 'scale(1)' : 'scale(0.5)' }}
+                    />
                     <span
                       className={`font-mono-label text-[11px] tracking-[0.18em] transition-colors duration-300 ${
-                        isActive ? 'text-[#E8E0D5]' : 'text-white/35 group-hover:text-white/70'
+                        isActive
+                          ? 'text-[#0A0A0A]'
+                          : 'text-[#0A0A0A]/35 group-hover:text-[#0A0A0A]/70'
                       }`}
                     >
                       {link.label}
@@ -72,37 +75,36 @@ export default function Navigation() {
 
         {/* Footer tagline */}
         <div>
-          <div className="w-8 h-px bg-[#C4622D] mb-4" />
-          <p className="font-mono-label text-[9px] text-white/20 leading-relaxed">
+          <div className="w-8 h-px bg-[#2D7A6B] mb-4" />
+          <p className="font-mono-label text-[9px] text-[#0A0A0A]/25 leading-relaxed">
             Exotic<br />Lifestyle.
           </p>
         </div>
       </nav>
 
-      {/* Mobile Top Bar */}
+      {/* ── Mobile Top Bar ── */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 lg:hidden flex items-center justify-between px-6 py-4 transition-all duration-300 ${
-          scrolled || mobileOpen ? 'bg-[#050505]/95 backdrop-blur-sm border-b border-white/5' : 'bg-transparent'
+          scrolled || mobileOpen
+            ? 'bg-[#F2EFE9]/95 backdrop-blur-sm border-b border-[#0A0A0A]/08'
+            : 'bg-transparent'
         }`}
       >
         <Link href="/">
-          <span
-            className="text-[13px] font-bold tracking-[0.12em] uppercase text-[#E8E0D5]"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
+          <span className="font-heading text-[14px] tracking-[0.1em] uppercase text-[#0A0A0A]">
             Woodhill Studios
           </span>
         </Link>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-[#E8E0D5] p-1"
+          className="text-[#0A0A0A] p-1"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* ── Mobile Menu Overlay ── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -110,7 +112,7 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="fixed inset-0 z-40 lg:hidden bg-[#050505]/98 backdrop-blur-md flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-40 lg:hidden bg-[#F2EFE9]/98 backdrop-blur-md flex flex-col items-center justify-center gap-8"
           >
             {navLinks.map((link, i) => {
               const isActive = location === link.href || (link.href !== '/' && location.startsWith(link.href));
@@ -123,10 +125,9 @@ export default function Navigation() {
                 >
                   <Link href={link.href}>
                     <span
-                      className={`text-4xl font-bold tracking-tight transition-colors duration-200 ${
-                        isActive ? 'text-[#C4622D]' : 'text-[#E8E0D5] hover:text-white'
+                      className={`font-heading text-5xl tracking-tight transition-colors duration-200 ${
+                        isActive ? 'text-[#2D7A6B]' : 'text-[#0A0A0A] hover:text-[#2D7A6B]'
                       }`}
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {link.label}
                     </span>
@@ -138,7 +139,7 @@ export default function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="font-mono-label text-[10px] text-white/25 mt-8"
+              className="font-mono-label text-[10px] text-[#0A0A0A]/25 mt-8"
             >
               Exotic Lifestyle.
             </motion.p>

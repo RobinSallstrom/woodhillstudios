@@ -1,6 +1,6 @@
-// Media Manager Page — Underground Cinema Design System
-// Admin-only page for uploading and managing S3 media assets
-// Accessible at /media — requires login
+// Media Manager Page — Woodhill Studios Redesign
+// Admin page for uploading and managing S3 media assets
+// Off-white bg, black text, teal accent
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -27,15 +27,15 @@ export default function MediaManager() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center pt-20 lg:pt-0 lg:pl-[200px]">
-        <div className="w-px h-12 bg-white/10 animate-pulse" />
+      <div className="min-h-screen bg-[#F2EFE9] flex items-center justify-center pt-20 lg:pt-0 lg:pl-[200px]">
+        <div className="w-px h-12 bg-[#0A0A0A]/10 animate-pulse" />
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center pt-20 lg:pt-0 lg:pl-[200px]">
+      <div className="min-h-screen bg-[#F2EFE9] flex items-center justify-center pt-20 lg:pt-0 lg:pl-[200px]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -43,14 +43,11 @@ export default function MediaManager() {
           className="px-6 text-center"
         >
           <div className="rule-label mb-6 justify-center">Access Required</div>
-          <h1
-            className="text-[clamp(2.5rem,6vw,5rem)] font-bold text-[#E8E0D5] leading-none mb-6"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
+          <h1 className="font-hero text-[clamp(2.5rem,6vw,5rem)] text-[#0A0A0A] leading-none mb-6 uppercase">
             Sign In to<br />
-            <span className="text-[#C4622D]">Manage Media</span>
+            <span className="text-[#2D7A6B]">Manage Media</span>
           </h1>
-          <p className="text-white/40 text-sm mb-8 max-w-xs mx-auto" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+          <p className="text-[#0A0A0A]/40 text-sm mb-8 max-w-xs mx-auto font-body">
             Upload and manage images, videos, and documents for the Woodhill Studios site.
           </p>
           <a href={getLoginUrl()}>
@@ -58,10 +55,10 @@ export default function MediaManager() {
               whileHover={{ x: 4 }}
               className="inline-flex items-center gap-3 group cursor-pointer"
             >
-              <span className="font-mono-label text-[11px] text-[#E8E0D5] group-hover:text-[#C4622D] transition-colors duration-300">
+              <span className="font-mono-label text-[11px] text-[#0A0A0A] group-hover:text-[#2D7A6B] transition-colors duration-300">
                 Sign In
               </span>
-              <LogIn size={13} className="text-[#C4622D]" />
+              <LogIn size={13} className="text-[#2D7A6B]" />
             </motion.div>
           </a>
         </motion.div>
@@ -70,7 +67,7 @@ export default function MediaManager() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] pt-20 lg:pt-0 lg:pl-[200px]">
+    <div className="min-h-screen bg-[#F2EFE9] pt-20 lg:pt-0 lg:pl-[200px]">
       <div className="px-6 lg:px-12 py-12 lg:py-16">
         {/* Back link */}
         <motion.div
@@ -81,8 +78,8 @@ export default function MediaManager() {
         >
           <Link href="/">
             <div className="flex items-center gap-2 group cursor-pointer w-fit">
-              <ArrowLeft size={13} className="text-white/30 group-hover:text-[#C4622D] transition-colors duration-300" />
-              <span className="font-mono-label text-[10px] text-white/30 group-hover:text-white/60 transition-colors duration-300">
+              <ArrowLeft size={13} className="text-[#0A0A0A]/30 group-hover:text-[#2D7A6B] transition-colors duration-300" />
+              <span className="font-mono-label text-[10px] text-[#0A0A0A]/30 group-hover:text-[#0A0A0A]/60 transition-colors duration-300">
                 Back to Site
               </span>
             </div>
@@ -98,15 +95,12 @@ export default function MediaManager() {
         >
           <div className="rule-label mb-6">Admin</div>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-            <h1
-              className="text-[clamp(2.5rem,6vw,5rem)] font-bold text-[#E8E0D5] leading-none"
-              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-            >
+            <h1 className="font-hero text-[clamp(2.5rem,6vw,5rem)] text-[#0A0A0A] leading-none uppercase">
               Media Manager
             </h1>
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              <span className="font-mono-label text-[10px] text-white/30">
+              <div className="w-2 h-2 rounded-full bg-[#2D7A6B]" />
+              <span className="font-mono-label text-[10px] text-[#0A0A0A]/30">
                 Signed in as {user.name ?? user.email ?? 'Owner'}
               </span>
             </div>
@@ -129,11 +123,11 @@ export default function MediaManager() {
                     key={cat.value}
                     onClick={() => setActiveCategory(cat.value)}
                     className={`flex items-center gap-3 py-2 group text-left transition-colors duration-200 ${
-                      activeCategory === cat.value ? 'text-[#E8E0D5]' : 'text-white/30 hover:text-white/60'
+                      activeCategory === cat.value ? 'text-[#0A0A0A]' : 'text-[#0A0A0A]/30 hover:text-[#0A0A0A]/60'
                     }`}
                   >
-                    <div className={`w-1 h-1 rounded-full transition-all duration-200 ${
-                      activeCategory === cat.value ? 'bg-[#C4622D]' : 'bg-transparent'
+                    <div className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                      activeCategory === cat.value ? 'bg-[#2D7A6B]' : 'bg-transparent'
                     }`} />
                     <span className="font-mono-label text-[11px]">{cat.label}</span>
                   </button>
@@ -153,10 +147,10 @@ export default function MediaManager() {
                   <button
                     onClick={() => setActiveArtist('')}
                     className={`flex items-center gap-3 py-2 text-left transition-colors duration-200 ${
-                      activeArtist === '' ? 'text-[#E8E0D5]' : 'text-white/30 hover:text-white/60'
+                      activeArtist === '' ? 'text-[#0A0A0A]' : 'text-[#0A0A0A]/30 hover:text-[#0A0A0A]/60'
                     }`}
                   >
-                    <div className={`w-1 h-1 rounded-full transition-all duration-200 ${activeArtist === '' ? 'bg-[#C4622D]' : 'bg-transparent'}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${activeArtist === '' ? 'bg-[#2D7A6B]' : 'bg-transparent'}`} />
                     <span className="font-mono-label text-[11px]">All Artists</span>
                   </button>
                   {artists.map(a => (
@@ -164,10 +158,10 @@ export default function MediaManager() {
                       key={a.id}
                       onClick={() => setActiveArtist(a.id)}
                       className={`flex items-center gap-3 py-2 text-left transition-colors duration-200 ${
-                        activeArtist === a.id ? 'text-[#E8E0D5]' : 'text-white/30 hover:text-white/60'
+                        activeArtist === a.id ? 'text-[#0A0A0A]' : 'text-[#0A0A0A]/30 hover:text-[#0A0A0A]/60'
                       }`}
                     >
-                      <div className={`w-1 h-1 rounded-full transition-all duration-200 ${activeArtist === a.id ? 'bg-[#C4622D]' : 'bg-transparent'}`} />
+                      <div className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${activeArtist === a.id ? 'bg-[#2D7A6B]' : 'bg-transparent'}`} />
                       <span className="font-mono-label text-[11px]">{a.name}</span>
                     </button>
                   ))}

@@ -1,259 +1,281 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* ── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Space+Mono:wght@400;700&display=swap');
+
+/* ── Design Tokens ────────────────────────────────────────────────────────── */
+:root {
+  --bg:        #F2EFE9;
+  --fg:        #0A0A0A;
+  --accent:    #2D7A6B;
+  --accent-lt: #3A9B89;
+  --muted:     rgba(10,10,10,0.45);
+  --border:    rgba(10,10,10,0.10);
+
+  /* Fonts */
+  --font-hero:    'Anton', sans-serif;
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+
+  /* Tailwind semantic mapping */
+  --background:       #F2EFE9;
+  --foreground:       #0A0A0A;
+  --card:             #ECEAE4;
+  --card-foreground:  #0A0A0A;
+  --popover:          #ECEAE4;
+  --popover-foreground: #0A0A0A;
+  --primary:          #0A0A0A;
+  --primary-foreground: #F2EFE9;
+  --secondary:        #E4E1DA;
+  --secondary-foreground: #0A0A0A;
+  --muted-bg:         #E4E1DA;
+  --muted-foreground: rgba(10,10,10,0.50);
+  --accent-color:     #2D7A6B;
+  --accent-foreground: #F2EFE9;
+  --destructive:      #C0392B;
+  --destructive-foreground: #F2EFE9;
+  --border-color:     rgba(10,10,10,0.10);
+  --input:            rgba(10,10,10,0.08);
+  --ring:             #2D7A6B;
+  --radius:           0px;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
+  --color-primary:            var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
+  --color-secondary:          var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-muted:              var(--muted-bg);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-accent:             var(--accent-color);
+  --color-accent-foreground:  var(--accent-foreground);
+  --color-destructive:        var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:             var(--border-color);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+  --radius-sm:                calc(var(--radius) - 2px);
+  --radius-md:                var(--radius);
+  --radius-lg:                calc(var(--radius) + 2px);
+  --radius-xl:                calc(var(--radius) + 4px);
+  --font-sans:                var(--font-body);
+  --font-mono:                var(--font-mono);
 }
 
-/* ============================================================
-   WOODHILL STUDIOS — UNDERGROUND CINEMA DESIGN SYSTEM
-   Background: #050505 true black
-   Text: #E8E0D5 warm off-white
-   Accent: #C4622D rust/terracotta
-   Secondary surface: #111111 deep charcoal
-   Display: Playfair Display italic (drama)
-   Heading: Barlow Condensed bold (industrial)
-   Body: DM Sans (clean, readable)
-   Mono: Space Mono (labels/metadata)
-   ============================================================ */
-
-:root {
-  --radius: 0.125rem;
-  --background: oklch(0.06 0 0);
-  --foreground: oklch(0.91 0.008 70);
-  --card: oklch(0.09 0 0);
-  --card-foreground: oklch(0.91 0.008 70);
-  --popover: oklch(0.09 0 0);
-  --popover-foreground: oklch(0.91 0.008 70);
-  --primary: oklch(0.55 0.12 40);
-  --primary-foreground: oklch(0.97 0 0);
-  --secondary: oklch(0.12 0 0);
-  --secondary-foreground: oklch(0.75 0.006 70);
-  --muted: oklch(0.14 0 0);
-  --muted-foreground: oklch(0.52 0.006 70);
-  --accent: oklch(0.55 0.12 40);
-  --accent-foreground: oklch(0.97 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.55 0.12 40);
-}
-
+/* ── Base ─────────────────────────────────────────────────────────────────── */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
+  *, *::before, *::after { box-sizing: border-box; }
 
   html {
     scroll-behavior: smooth;
+    cursor: none;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'DM Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
-  /* Film grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 128px 128px;
-  }
+  /* Hide default cursor everywhere */
+  *, *::before, *::after { cursor: none !important; }
 
-  h1, h2, h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .font-display {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-  }
-
-  .font-mono-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1;
     text-transform: uppercase;
   }
 
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  a[href] {
-    @apply cursor-pointer;
-  }
+  a { color: inherit; text-decoration: none; }
+
+  img, video { display: block; max-width: 100%; }
+
+  /* Tailwind border default */
+  * { border-color: var(--border-color); }
+
+  /* Container */
+  .container { width: 100%; margin-inline: auto; padding-inline: 1.5rem; }
+
+  /* Flex min-size fix */
+  .flex { min-width: 0; min-height: 0; }
 }
 
-@layer components {
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  @media (min-width: 768px) {
-    .container {
-      padding-left: 2.5rem;
-      padding-right: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .container {
-      padding-left: 3rem;
-      padding-right: 3rem;
-      max-width: 1440px;
-    }
-  }
-
-  /* Thin horizontal rule with label */
-  .rule-label {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: oklch(0.45 0.006 70);
-  }
-
-  .rule-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: oklch(1 0 0 / 10%);
-  }
-
-  /* Image hover reveal */
-  .img-reveal {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .img-reveal img {
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                filter 0.7s ease;
-    will-change: transform;
-  }
-
-  .img-reveal:hover img {
-    transform: scale(1.04);
-    filter: brightness(0.6);
-  }
-
-  .img-reveal .reveal-label {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-
-  .img-reveal:hover .reveal-label {
-    opacity: 1;
-  }
-
-  /* Rust accent underline */
-  .accent-underline {
-    position: relative;
-    display: inline-block;
-  }
-
-  .accent-underline::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: oklch(0.55 0.12 40);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .accent-underline:hover::after,
-  .accent-underline.active::after {
-    transform: scaleX(1);
-  }
-
-  /* Nav active dot */
-  .nav-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: oklch(0.55 0.12 40);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .nav-item.active .nav-dot,
-  .nav-item:hover .nav-dot {
-    opacity: 1;
-  }
+/* ── Typography utilities ─────────────────────────────────────────────────── */
+.font-hero    { font-family: var(--font-hero); }
+.font-heading { font-family: var(--font-heading); }
+.font-body    { font-family: var(--font-body); }
+.font-mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 3px;
+/* Rule label: small mono text with leading line */
+.rule-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
-::-webkit-scrollbar-track {
-  background: #050505;
-}
-::-webkit-scrollbar-thumb {
-  background: oklch(0.55 0.12 40);
+.rule-label::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
 }
 
-/* Selection */
+/* ── Film Grain Overlay ───────────────────────────────────────────────────── */
+/* Applied via a pseudo-element on .grain-layer or body::after */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+  animation: grain-shift 0.12s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { background-position: 0 0; }
+  10%  { background-position: -5% -10%; }
+  20%  { background-position: -15% 5%; }
+  30%  { background-position: 7% -25%; }
+  40%  { background-position: -5% 25%; }
+  50%  { background-position: -15% 10%; }
+  60%  { background-position: 15% 0; }
+  70%  { background-position: 0 15%; }
+  80%  { background-position: 3% 35%; }
+  90%  { background-position: -10% 10%; }
+  100% { background-position: 0 0; }
+}
+
+/* ── Custom Cursor ────────────────────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, opacity 0.2s ease;
+  mix-blend-mode: multiply;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--fg);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.4;
+}
+
+.cursor-ring.hovering {
+  width: 56px;
+  height: 56px;
+  border-color: var(--accent);
+  opacity: 0.8;
+}
+
+/* ── Image hover reveal ───────────────────────────────────────────────────── */
+.img-reveal { overflow: hidden; position: relative; }
+.img-reveal .reveal-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.img-reveal:hover .reveal-label { opacity: 1; }
+
+/* ── Navigation ───────────────────────────────────────────────────────────── */
+.nav-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  z-index: 100;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* ── Marquee ──────────────────────────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ── Lightbox ─────────────────────────────────────────────────────────────── */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,10,0.96);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Page warp transition ─────────────────────────────────────────────────── */
+.warp-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-color); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ── Selection ────────────────────────────────────────────────────────────── */
 ::selection {
-  background: oklch(0.55 0.12 40 / 30%);
-  color: #E8E0D5;
+  background: var(--accent);
+  color: var(--bg);
 }
