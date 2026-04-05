@@ -14,7 +14,8 @@ import Home from "./pages/Home";
 import Artists from "./pages/Artists";
 import ArtistDetail from "./pages/ArtistDetail";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
+import Contact from './pages/Contact';
+import MediaManager from './pages/MediaManager';
 import NotFound from "./pages/NotFound";
 
 function PageTransition({ children }: { children: React.ReactNode }) {
@@ -40,7 +41,7 @@ function Router() {
           <PageTransition><Home /></PageTransition>
         </Route>
         <Route path="/artists/:id">
-          {(params) => (
+          {() => (
             <PageTransition><ArtistDetail /></PageTransition>
           )}
         </Route>
@@ -52,6 +53,9 @@ function Router() {
         </Route>
         <Route path="/contact">
           <PageTransition><Contact /></PageTransition>
+        </Route>
+        <Route path="/media">
+          <PageTransition><MediaManager /></PageTransition>
         </Route>
         <Route>
           <PageTransition><NotFound /></PageTransition>
