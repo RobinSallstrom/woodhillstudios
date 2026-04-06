@@ -35,13 +35,8 @@
 - [x] Update CustomCursor to work on light background
 - [x] Update MarqueeStrip to new palette
 
-## In Progress
-- [x] Fix cursor bug: trailing comma in borderColor + remove mix-blend-multiply on dot
-- [x] Rebuild page transition as WebGL Three.js texture-blend (Tao Tajima slow gravitational style)
-- [x] Push project to GitHub woodhillstudios repository
-
 ## Future (requires user content / external credentials)
 - [ ] Replace placeholder artist portrait images with real photos
-- [x] Add lightbox for portfolio images (implemented in Home + ArtistDetail)
+- [ ] Add lightbox for portfolio images
 - [ ] Connect contact form to email service (Resend/Formspree)
 - [ ] Add image management to individual artist pages (pull from storage.list)
