@@ -1,5 +1,6 @@
-// Marquee Strip — Woodhill Studios Redesign
-// Infinite horizontal scrolling text strip — off-white bg, black text, teal diamonds
+// Marquee Strip — Underground Cinema Design System
+// Infinite horizontal scrolling text strip
+// Used between sections for editorial rhythm
 
 import { motion } from 'framer-motion';
 
@@ -11,30 +12,28 @@ interface MarqueeStripProps {
 
 const defaultItems = [
   'Woodhill Studios',
-  '◆',
+  '✦',
   'Exotic Lifestyle',
-  '◆',
+  '✦',
   'Stockholm',
-  '◆',
+  '✦',
   'Graffiti',
-  '◆',
+  '✦',
   'Music Production',
-  '◆',
+  '✦',
   'Film',
-  '◆',
+  '✦',
   'Animation',
-  '◆',
+  '✦',
   'Fine Art',
-  '◆',
-  'Game Dev',
-  '◆',
+  '✦',
 ];
 
 export default function MarqueeStrip({ items = defaultItems, speed = 30, className = '' }: MarqueeStripProps) {
   const repeated = [...items, ...items, ...items];
 
   return (
-    <div className={`overflow-hidden border-y border-[#0A0A0A]/08 py-3 bg-[#F2EFE9] ${className}`}>
+    <div className={`overflow-hidden border-y border-white/5 py-3 ${className}`}>
       <motion.div
         animate={{ x: [0, `-${100 / 3}%`] }}
         transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
@@ -45,7 +44,7 @@ export default function MarqueeStrip({ items = defaultItems, speed = 30, classNa
           <span
             key={i}
             className={`font-mono-label text-[10px] tracking-[0.2em] ${
-              item === '◆' ? 'text-[#2D7A6B]' : 'text-[#0A0A0A]/30'
+              item === '✦' ? 'text-[#C4622D]' : 'text-white/20'
             }`}
           >
             {item}

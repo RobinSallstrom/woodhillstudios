@@ -60,7 +60,7 @@ export default function CustomCursor() {
         style={{ x: dotX, y: dotY, translateX: '-50%', translateY: '-50%' }}
         animate={{ scale: isHovering ? 0 : 1, opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.15 }}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#2D7A6B] pointer-events-none z-[99999] mix-blend-multiply"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#C4622D] pointer-events-none z-[99999] mix-blend-difference"
       />
       {/* Ring */}
       <motion.div
@@ -68,7 +68,7 @@ export default function CustomCursor() {
         animate={{
           scale: isHovering ? 2.5 : 1,
           opacity: isVisible ? (isHovering ? 0.6 : 0.3) : 0,
-          borderColor: isHovering ? '#2D7A6B' : 'rgba(10,10,10,0.35),'
+          borderColor: isHovering ? '#C4622D' : 'rgba(232,224,213,0.5)',
         }}
         transition={{ duration: 0.3 }}
         className="fixed top-0 left-0 w-8 h-8 rounded-full border pointer-events-none z-[99998]"

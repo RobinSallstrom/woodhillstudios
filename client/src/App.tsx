@@ -1,6 +1,6 @@
 // App.tsx — Woodhill Studios
-// Off-white / Black / Teal palette
-// Routes: / | /artists | /artists/:id | /about | /contact | /media
+// Underground Cinema Design System
+// Routes: / | /artists | /artists/:id | /about | /contact
 
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,8 +10,6 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Navigation from "./components/Navigation";
 import CustomCursor from "./components/CustomCursor";
-import GrainOverlay from "./components/GrainOverlay";
-import WarpTransition from "./components/WarpTransition";
 import Home from "./pages/Home";
 import Artists from "./pages/Artists";
 import ArtistDetail from "./pages/ArtistDetail";
@@ -20,13 +18,13 @@ import Contact from './pages/Contact';
 import MediaManager from './pages/MediaManager';
 import NotFound from "./pages/NotFound";
 
-function PageFade({ children }: { children: React.ReactNode }) {
+function PageTransition({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.35 }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.45 }}
     >
       {children}
     </motion.div>
@@ -40,27 +38,27 @@ function Router() {
     <AnimatePresence mode="wait">
       <Switch key={location}>
         <Route path="/">
-          <PageFade><Home /></PageFade>
+          <PageTransition><Home /></PageTransition>
         </Route>
         <Route path="/artists/:id">
           {() => (
-            <PageFade><ArtistDetail /></PageFade>
+            <PageTransition><ArtistDetail /></PageTransition>
           )}
         </Route>
         <Route path="/artists">
-          <PageFade><Artists /></PageFade>
+          <PageTransition><Artists /></PageTransition>
         </Route>
         <Route path="/about">
-          <PageFade><About /></PageFade>
+          <PageTransition><About /></PageTransition>
         </Route>
         <Route path="/contact">
-          <PageFade><Contact /></PageFade>
+          <PageTransition><Contact /></PageTransition>
         </Route>
         <Route path="/media">
-          <PageFade><MediaManager /></PageFade>
+          <PageTransition><MediaManager /></PageTransition>
         </Route>
         <Route>
-          <PageFade><NotFound /></PageFade>
+          <PageTransition><NotFound /></PageTransition>
         </Route>
       </Switch>
     </AnimatePresence>
@@ -70,32 +68,26 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light">
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster
-            theme="light"
+            theme="dark"
             toastOptions={{
               style: {
-                background: '#F2EFE9',
-                border: '1px solid rgba(10,10,10,0.10)',
-                color: '#0A0A0A',
+                background: '#111',
+                border: '1px solid rgba(255,255,255,0.08)',
+                color: '#E8E0D5',
                 fontFamily: "'Space Mono', monospace",
                 fontSize: '11px',
-                letterSpacing: '0.08em',
+                letterSpacing: '0.1em',
               },
             }}
           />
-          {/* Global overlays */}
-          <GrainOverlay />
           <CustomCursor />
-
-          {/* Main layout */}
-          <div className="flex min-h-screen bg-[#F2EFE9]">
+          <div className="flex min-h-screen bg-[#050505]">
             <Navigation />
             <main className="flex-1 min-w-0">
-              <WarpTransition>
-                <Router />
-              </WarpTransition>
+              <Router />
             </main>
           </div>
         </TooltipProvider>
