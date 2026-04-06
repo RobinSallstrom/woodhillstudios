@@ -1,77 +1,99 @@
-// Custom Cursor — Underground Cinema Design System
-// Small dot that follows the mouse with a trailing ring
-// Rust accent on hover over interactive elements
+// CustomCursor — teal dot + black ring on off-white background
+// No mix-blend-mode to avoid invisibility issues
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 export default function CustomCursor() {
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const springConfig = { damping: 30, stiffness: 300, mass: 0.5 };
-  const dotX = useSpring(cursorX, { damping: 40, stiffness: 500, mass: 0.3 });
-  const dotY = useSpring(cursorY, { damping: 40, stiffness: 500, mass: 0.3 });
-  const ringX = useSpring(cursorX, springConfig);
-  const ringY = useSpring(cursorY, springConfig);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: -100, y: -100 });
+  const ring = useRef({ x: -100, y: -100 });
+  const rafRef = useRef<number>(0);
+  const isHovering = useRef(false);
 
   useEffect(() => {
-    // Only show on desktop
-    if (window.innerWidth < 1024) return;
+    const dot = dotRef.current;
+    const ringEl = ringRef.current;
+    if (!dot || !ringEl) return;
 
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+    const onMove = (e: MouseEvent) => {
+      pos.current = { x: e.clientX, y: e.clientY };
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.closest('a') ||
-        target.closest('button') ||
-        target.closest('[role="button"]') ||
-        target.closest('.img-reveal') ||
-        target.closest('.cursor-pointer')
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const onEnter = () => { isHovering.current = true; };
+    const onLeave = () => { isHovering.current = false; };
+
+    document.addEventListener('mousemove', onMove);
+
+    // Add hover listeners to interactive elements
+    const addListeners = () => {
+      document.querySelectorAll('a, button, [role="button"], .img-reveal, .cursor-pointer').forEach(el => {
+        el.addEventListener('mouseenter', onEnter);
+        el.addEventListener('mouseleave', onLeave);
+      });
+    };
+    addListeners();
+
+    // Re-add on DOM changes
+    const observer = new MutationObserver(addListeners);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    const animate = () => {
+      // Dot follows cursor directly
+      dot.style.transform = `translate(${pos.current.x - 4}px, ${pos.current.y - 4}px)`;
+
+      // Ring gravitates toward cursor
+      ring.current.x += (pos.current.x - ring.current.x) * 0.12;
+      ring.current.y += (pos.current.y - ring.current.y) * 0.12;
+
+      const scale = isHovering.current ? 1.8 : 1;
+      ringEl.style.transform = `translate(${ring.current.x - 16}px, ${ring.current.y - 16}px) scale(${scale})`;
+
+      // Dot: teal when hovering, black otherwise
+      dot.style.background = isHovering.current ? '#2D7A6B' : '#0A0A0A';
+      dot.style.opacity = isHovering.current ? '0' : '1';
+
+      // Ring: teal border when hovering
+      ringEl.style.borderColor = isHovering.current ? '#2D7A6B' : 'rgba(10,10,10,0.4)';
+
+      rafRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleMouseOver);
+    rafRef.current = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mousemove', onMove);
+      observer.disconnect();
+      cancelAnimationFrame(rafRef.current);
     };
-  }, [isVisible]);
-
-  if (typeof window !== 'undefined' && window.innerWidth < 1024) return null;
+  }, []);
 
   return (
     <>
       {/* Dot */}
-      <motion.div
-        style={{ x: dotX, y: dotY, translateX: '-50%', translateY: '-50%' }}
-        animate={{ scale: isHovering ? 0 : 1, opacity: isVisible ? 1 : 0 }}
-        transition={{ duration: 0.15 }}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#C4622D] pointer-events-none z-[99999] mix-blend-difference"
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none z-[99997]"
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: '50%',
+          background: '#0A0A0A',
+          willChange: 'transform',
+        }}
       />
       {/* Ring */}
-      <motion.div
-        style={{ x: ringX, y: ringY, translateX: '-50%', translateY: '-50%' }}
-        animate={{
-          scale: isHovering ? 2.5 : 1,
-          opacity: isVisible ? (isHovering ? 0.6 : 0.3) : 0,
-          borderColor: isHovering ? '#C4622D' : 'rgba(232,224,213,0.5)',
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 pointer-events-none z-[99996]"
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: '50%',
+          border: '1.5px solid rgba(10,10,10,0.4)',
+          willChange: 'transform',
+          transition: 'border-color 0.2s ease, transform 0.1s ease',
         }}
-        transition={{ duration: 0.3 }}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border pointer-events-none z-[99998]"
       />
     </>
   );

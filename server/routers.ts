@@ -6,6 +6,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { storagePut } from "./storage";
 import { insertMediaFile, listMediaFiles, deleteMediaFile, getMediaFileById } from "./db";
 import { nanoid } from "nanoid";
+import { notifyOwner } from "./_core/notification";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -19,6 +20,25 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+  }),
+
+  // ── Contact form ───────────────────────────────────────────────────────────
+  contact: router({
+    submit: publicProcedure
+      .input(
+        z.object({
+          name: z.string().min(1).max(200),
+          email: z.string().email().max(320),
+          message: z.string().min(1).max(2000),
+        })
+      )
+      .mutation(async ({ input }) => {
+        await notifyOwner({
+          title: `New contact from ${input.name}`,
+          content: `**From:** ${input.name} <${input.email}>\n\n${input.message}`,
+        });
+        return { success: true };
+      }),
   }),
 
   // ── Storage / Media ────────────────────────────────────────────────────────

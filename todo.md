@@ -1,29 +1,24 @@
 # Woodhill Studios — TODO
 
-## Core Site
-- [x] Homepage with hero, work grid, manifesto strip
-- [x] Artists roster page with portrait cards and hover reveals
-- [x] Individual artist detail pages with bio + portfolio grid
-- [x] About page with split layout, disciplines stats, gallery
-- [x] Contact page with brutalist form
-- [x] 404 Not Found page
-- [x] Fixed sidebar navigation (desktop) + hamburger menu (mobile)
-- [x] Custom trailing cursor
-- [x] Marquee ticker strip
-- [x] Framer Motion page transitions
+## Completed
+- [x] Initial dark "Underground Cinema" build (Playfair Display, rust accent)
+- [x] Full-stack upgrade: Express + tRPC + Drizzle ORM + MySQL
+- [x] S3 file storage integration (storagePut/storageGet, media_files table)
+- [x] Media Manager admin page at /media with drag-and-drop upload
+- [x] Update global CSS: off-white #F2EFE9, black #0A0A0A, teal #2D7A6B, 10% film grain
+- [x] Update Google Fonts: Anton (hero), Bebas Neue (headings), DM Sans (body), Space Mono (mono)
+- [x] Rebuild as single long-scroll page: Hero → About → Artists → Contact
+- [x] Remove Selected Work section
+- [x] Video hero with staggered character reveal (Anton, all-caps, centered, max size)
+- [x] Artist accordion with expandable bio + portfolio grid
+- [x] Lightbox for portfolio images (fullscreen, keyboard, swipe, ESC)
+- [x] Top-bar navigation with anchor scroll links and active section highlight
+- [x] Custom cursor (teal dot + black ring, no mix-blend issues)
+- [x] Update MediaManager to new off-white/teal palette
 
-## Full-Stack Upgrade
-- [x] Upgrade to full-stack (Express + tRPC + Drizzle + MySQL)
-- [x] Database schema: users + media_files tables
-- [x] S3 storage helpers (storagePut / storageGet)
-- [x] tRPC procedures: storage.upload, storage.list, storage.delete
-- [x] MediaUploader component (drag-and-drop, progress, file library)
-- [x] Media Manager admin page at /media (auth-gated)
-- [x] Media nav link in sidebar
-- [x] Vitest tests for storage procedures (4/4 passing)
-
-## Future
-- [ ] Replace placeholder artist portrait images with real photos
-- [ ] Add lightbox for portfolio images
-- [ ] Connect contact form to email service (Resend/Formspree)
-- [ ] Add image management to individual artist pages (pull from storage.list)
+## Future (requires user content / external credentials)
+- [ ] Replace placeholder Unsplash portrait images with real artist photos (upload via /media)
+- [ ] Replace placeholder portfolio images with real work (upload via /media)
+- [ ] Wire contact form to notifyOwner (no external service needed — built-in)
+- [ ] Add social/external links to artist cards (Spotify, Instagram, Behance, etc.)
+- [ ] Full CMS integration (assign uploaded media to specific site slots without touching code)
