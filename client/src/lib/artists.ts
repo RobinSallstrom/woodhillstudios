@@ -13,38 +13,55 @@ export interface Artist {
   tags: string[];
 }
 
-// Unsplash images used for artist cards and portfolios (dark, cinematic, editorial)
+// Placeholder gradients in the site palette — swapped for real photos when they land.
+// Each is an inline SVG data URI, so nothing is fetched from anywhere.
+function grad(stops: string[], angle = 135): string {
+  const rad = (angle * Math.PI) / 180;
+  const x2 = (50 + Math.sin(rad) * 50).toFixed(1);
+  const y2 = (50 - Math.cos(rad) * 50).toFixed(1);
+  const stopTags = stops
+    .map((color, i) => `<stop offset="${Math.round((i / (stops.length - 1)) * 100)}%" stop-color="${color}"/>`)
+    .join('');
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000">` +
+    `<defs><linearGradient id="g" x1="${(100 - +x2).toFixed(1)}%" y1="${(100 - +y2).toFixed(1)}%" x2="${x2}%" y2="${y2}%">${stopTags}</linearGradient></defs>` +
+    `<rect width="800" height="1000" fill="url(#g)"/>` +
+    `</svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
+// Palette: teal #2D7A6B family, charcoal/black, sage, sand/ochre, muted rust
 const UNSPLASH = {
-  graffiti1: 'https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?w=800&q=80',
-  graffiti2: 'https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?w=800&q=80',
-  graffiti3: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&q=80',
-  graffiti4: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-  music1: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80',
-  music2: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=800&q=80',
-  music3: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80',
-  digital1: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&q=80',
-  digital2: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
-  digital3: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=800&q=80',
-  film1: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&q=80',
-  film2: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80',
-  film3: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80',
-  painting1: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80',
-  painting2: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80',
-  painting3: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=800&q=80',
-  illustration1: 'https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=800&q=80',
-  illustration2: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=800&q=80',
-  dark1: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80',
-  dark2: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
-  studio1: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80',
-  portrait1: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
-  portrait2: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
-  portrait3: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80',
-  portrait4: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80',
-  portrait5: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
-  portrait6: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80',
-  portrait7: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80',
-  portrait8: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=600&q=80',
-  portrait9: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=600&q=80',
+  graffiti1: grad(['#2D7A6B', '#143A32', '#0A0A0A'], 135),
+  graffiti2: grad(['#C4622D', '#5C2F17', '#1A1A1A'], 160),
+  graffiti3: grad(['#7FA695', '#2D7A6B', '#143A32'], 110),
+  graffiti4: grad(['#1A1A1A', '#2D5C52', '#2D7A6B'], 200),
+  music1: grad(['#0A0A0A', '#12332C', '#2D7A6B'], 180),
+  music2: grad(['#1A1A1A', '#4A2A1A', '#C4622D'], 145),
+  music3: grad(['#0A0A0A', '#37474D', '#4A5E66'], 170),
+  digital1: grad(['#2D7A6B', '#3E565C', '#4A5E66'], 120),
+  digital2: grad(['#4A5E66', '#22303A', '#0A0A0A'], 150),
+  digital3: grad(['#A8BFB2', '#7FA695', '#2D7A6B'], 100),
+  film1: grad(['#2E2E2E', '#4B463C', '#6B665C'], 165),
+  film2: grad(['#0A0A0A', '#1A1A1A', '#2E2E2E'], 180),
+  film3: grad(['#6B665C', '#3A362E', '#0A0A0A'], 140),
+  painting1: grad(['#D9CBA8', '#C2A66B', '#B98A4A'], 125),
+  painting2: grad(['#F2EFE9', '#C9D2C5', '#7FA695'], 105),
+  painting3: grad(['#C2A66B', '#B06A3A', '#C4622D'], 155),
+  illustration1: grad(['#A8BFB2', '#CFC5A5', '#D9CBA8'], 95),
+  illustration2: grad(['#C4622D', '#C99A6A', '#D9CBA8'], 130),
+  dark1: grad(['#0A0A0A', '#1A1A1A', '#2E2E2E'], 200),
+  dark2: grad(['#2E2E2E', '#37474D', '#4A5E66'], 175),
+  studio1: grad(['#0A0A0A', '#143A32', '#2D7A6B'], 190),
+  portrait1: grad(['#C9D2C5', '#7FA695'], 135),
+  portrait2: grad(['#2D7A6B', '#143A32'], 135),
+  portrait3: grad(['#4A5E66', '#22303A'], 135),
+  portrait4: grad(['#C4622D', '#5C2F17'], 135),
+  portrait5: grad(['#2E2E2E', '#0A0A0A'], 135),
+  portrait6: grad(['#B98A4A', '#6B4A26'], 135),
+  portrait7: grad(['#7FA695', '#2D7A6B'], 135),
+  portrait8: grad(['#6B665C', '#3A362E'], 135),
+  portrait9: grad(['#143A32', '#0A0A0A'], 135),
 };
 
 export const artists: Artist[] = [
@@ -155,15 +172,3 @@ export const artistPortraits: Record<string, string> = {
   'simon-forsberg': UNSPLASH.portrait8,
   'kid-quatro': UNSPLASH.portrait5,
 };
-
-// Work grid items for homepage
-export const workItems = [
-  { id: 1, image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663511118461/B2SuVb2ndJDsVHLccsDb5D/wh-work1-MX6YxD94qdFzarsPDLKhbi.webp', title: 'Urban Murals', artist: 'Kiss', category: 'Graffiti', span: 'tall' },
-  { id: 2, image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663511118461/B2SuVb2ndJDsVHLccsDb5D/wh-work2-cdqidjFYwmEunLgeBcai9u.png', title: 'Nocturnal Sessions', artist: 'Kid Quatro', category: 'Music', span: 'tall' },
-  { id: 3, image: UNSPLASH.digital1, title: 'Radiant Series', artist: 'Robin Sällström', category: 'Visual Art', span: 'wide' },
-  { id: 4, image: UNSPLASH.film1, title: 'Documentary Cut', artist: 'Simon Forsberg', category: 'Film', span: 'normal' },
-  { id: 5, image: UNSPLASH.painting1, title: 'Canvas Studies', artist: 'Hannes Backlund', category: 'Painting', span: 'normal' },
-  { id: 6, image: UNSPLASH.graffiti2, title: 'Street Chronicles', artist: 'Otres', category: 'Graffiti', span: 'normal' },
-  { id: 7, image: UNSPLASH.illustration1, title: 'Analog Compositions', artist: 'Luciana Amado', category: 'Illustration', span: 'wide' },
-  { id: 8, image: UNSPLASH.music1, title: 'Audio Journeys', artist: 'Robin Carlheim-Müller', category: 'Sound', span: 'normal' },
-];

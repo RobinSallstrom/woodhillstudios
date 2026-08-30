@@ -10,8 +10,7 @@ import { artists, artistPortraits } from '../lib/artists';
 import Lightbox from '../components/Lightbox';
 
 // ── Contact ─────────────────────────────────────────────────────────────────────
-// TODO: replace with the studio's real contact address before going live
-const CONTACT_EMAIL = 'hello@woodhillstudios.example';
+const CONTACT_EMAIL = 'info.woodhill@gmail.com';
 
 // ── Hero video ──────────────────────────────────────────────────────────────────
 // Drop real footage at client/public/hero.mp4 and it appears automatically.
