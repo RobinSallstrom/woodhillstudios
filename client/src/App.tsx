@@ -1,6 +1,5 @@
 // App.tsx — Woodhill Studios
 // Single long-scroll page: / (Hero → About → Artists → Contact)
-// Plus /media admin route
 
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,14 +9,12 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Navigation from "./components/Navigation";
 import CustomCursor from "./components/CustomCursor";
 import Home from "./pages/Home";
-import MediaManager from "./pages/MediaManager";
 import NotFound from "./pages/NotFound";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/media" component={MediaManager} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

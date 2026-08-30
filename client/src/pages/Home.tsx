@@ -8,11 +8,15 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { artists, artistPortraits } from '../lib/artists';
 import Lightbox from '../components/Lightbox';
-import { trpc } from '../lib/trpc';
-import { toast } from 'sonner';
 
-// ── Hero video CDN URL ──────────────────────────────────────────────────────────
-const HERO_VIDEO = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663511118461/B2SuVb2ndJDsVHLccsDb5D/hero-forest_21c4f377.mp4';
+// ── Contact ─────────────────────────────────────────────────────────────────────
+// TODO: replace with the studio's real contact address before going live
+const CONTACT_EMAIL = 'hello@woodhillstudios.example';
+
+// ── Hero video ──────────────────────────────────────────────────────────────────
+// Drop real footage at client/public/hero.mp4 and it appears automatically.
+// Until then the hero renders on the dark fallback background.
+const HERO_VIDEO = '/hero.mp4';
 
 // ── Staggered character reveal ─────────────────────────────────────────────────
 function CharReveal({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
@@ -212,22 +216,17 @@ export default function Home() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [formSent, setFormSent] = useState(false);
 
-  const contactMutation = trpc.contact.submit.useMutation({
-    onSuccess: () => {
-      setFormSent(true);
-    },
-    onError: () => {
-      toast.error('Something went wrong. Try again.');
-    },
-  });
-
   const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Opens the visitor's mail app with the message prefilled — no backend needed.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    contactMutation.mutate(formState);
+    const subject = encodeURIComponent(`Woodhill Studios — message from ${formState.name}`);
+    const body = encodeURIComponent(`${formState.message}\n\n— ${formState.name} (${formState.email})`);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    setFormSent(true);
   };
 
   return (
@@ -236,7 +235,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           SECTION 1 — HERO
       ═══════════════════════════════════════════════════ */}
-      <section className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+      <section className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center bg-[#0A0A0A]">
 
         {/* Background video */}
         <video
